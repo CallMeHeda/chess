@@ -32,9 +32,7 @@ class RegistrationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             /** @var UploadedFile $picture */
             $picture = $form->get('picture')->getData();
-//            $fileUploader->upload($picture);
-//            dump($form->get('picture')->getData());
-            // encode the plain password
+
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
