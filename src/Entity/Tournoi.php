@@ -22,13 +22,13 @@ class Tournoi
     #[ORM\Column(type: 'date')]
     private $date;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: 'boolean', options: ["default" => 0])]
     private $isClassed;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
+    #[ORM\Column(type: 'integer', nullable: true, options: ["default" => 0])]
     private $eloMin;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
+    #[ORM\Column(type: 'integer', nullable: true, options: ["default" => 0])]
     private $eloMax;
 
     #[ORM\Column(type: 'string', length: 1)]
@@ -37,13 +37,13 @@ class Tournoi
     #[ORM\Column(type: 'string', length: 100)]
     private $type;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
+    #[ORM\Column(type: 'integer', nullable: true, options: ["default" => 0])]
     private $nbRonde;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
+    #[ORM\Column(type: 'integer', nullable: true, options: ["default" => 2])]
     private $nbMinJoueurs;
 
-    #[ORM\Column(type: 'integer', nullable: true)]
+    #[ORM\Column(type: 'integer', nullable: true, options: ["default" => 2])]
     private $nbMaxJoueurs;
 
     public function getId(): ?int

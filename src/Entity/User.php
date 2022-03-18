@@ -4,12 +4,14 @@ namespace App\Entity;
 
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`TUser`')]
+#[UniqueEntity(fields: ['username'], message: 'There is already an account with this username')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -18,6 +20,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 3, max: 180)]
     private $username;
 
     #[ORM\Column(type: 'json')]
@@ -28,18 +32,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'string', length: 55)]
     #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 55)]
     private $nom;
 
     #[ORM\Column(type: 'string', length: 55)]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 55)]
     private $prenom;
 
     #[ORM\Column(type: 'date')]
+//    #[Assert\Date]
+    #[Assert\NotBlank]
     private $birthdate;
 
     #[ORM\Column(type: 'integer', nullable: true)]
-    private $elo;
+    private $elo = 0;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Assert\File]
     private $picture;
 
     #[ORM\Column(type: 'string', enumType: Genre::class)]
@@ -127,15 +137,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getBirthdate(): ?\DateTimeInterface
+    /**
+     * @return mixed
+     */
+    public function getBirthdate()
     {
         return $this->birthdate;
     }
 
-    public function setBirthdate(\DateTimeInterface $birthdate): self
+    /**
+     * @param mixed $birthdate
+     * @return User
+     */
+    public function setBirthdate($birthdate)
     {
         $this->birthdate = $birthdate;
-
         return $this;
     }
 
@@ -151,12 +167,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
     public function getPicture(): ?string
     {
         return $this->picture;
     }
 
-    public function setPicture(?string $picture): self
+    /**
+     * @param mixed $picture
+     * @return User
+     */
+    public function setPicture($picture)
     {
         $this->picture = $picture;
 

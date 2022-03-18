@@ -1,3 +1,7 @@
-body {
-    background-color: lightgray;
+@import "bootstrap";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
+*{
+    margin: 0;
+    padding: 0;
 }
